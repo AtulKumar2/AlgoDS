@@ -1,0 +1,212 @@
+MenuItems Class
+-------------------------------------------------------
+Public Type declaration
+	typedef struct Id{
+		unsigned int val
+	} MENU_ID
+
+Private Type declaration
+	Each Item{
+		ID
+		Text
+		Short Text
+	}
+
+Data Members
+	Heading		string
+	Entries		std::map<ID>
+
+Functions
+	MenuItem		()			basic with all default
+	MenuItem		()
+
+	ID				(string)	returns Id
+	Text			(MENU_ID)	returns string
+	ShortText		(MENU_ID)	returns string
+	Heading			()			returns string
+
+	InValidId		()			returns Id
+	IsValid			(MENU_ID)	returns bool
+
+	Add				(Text, ShortText)	returns STATUS_GEN
+	RemoveExit		()			returns STATUS_GEN
+
+	DisplayHorizontal	()
+	DisplayVertical		()
+
+OperandType operations
+-------------------------------------------------------
+Enumerator and corresponding operations
+Iterate over Enumerator 
+Identify the invalid one
+Return an invalid enum
+Be easy to insert new one
+Get the string name of each value
+Get the list of all possible choices
+Get the list of all valid enumerators
+Get the list of enumerators with their corresponding choice numbers
+
+
+FileInput operations
+-------------------------------------------------------
+Main calls InputReader to read file block by block
+Maintains previous block read value
+Calls componenets one by one for each block
+Components reads next block based on previous block processed
+Components only get the block id that they have to read
+
+Component reads major op name
+	If major op name does not match, return STATUS_FILEIP::MAJOR_OP_NOT_MATCHING
+
+Major op matches - 
+	Component gets sub op name and matches with its list
+	If no sub op name matches, return error STATUS_FILEIP::SUB_OP_WRONG_VALUE
+		Processing does not stop due to this error
+		Main will continue to operate till all blocks are read and then spew error input block wise	
+
+A sub op matches - 
+	Componenet calls InputReader with block id, argument name and Input type
+	Depending on the argument type, InputReader fills up an InputArgument class
+
+
+InputArgument Class
+----------------------------------------------------
+Not to be transported out of a component.
+Public fields for various type of vectors.
+Only one of public members filled up which is identified by the OperandType field.
+A bool varibale identifes whether there is single value or multiple values.
+Just a field holder with no idea how to read the input file.
+
+MajorOps Class
+----------------------------------------------------
+Mapping between operations, strings and functions.
+Return wstring representation of operation if index is passed.
+Return index when wstring is passed.
+Expose major ops index publicly.
+Validate if an index is valid one.
+validate if  
+Expose class functionality through C style function. 1:1 matching with public interface of class.
+
+SubOps Class
+----------------------------------------------------
+
+##########################################################
+Input file specification
+##########################################################
+=====================================================
+Different styles of Input and output blocks
+=====================================================
+
+---------------------------------------------
+Work on sample data using default samplehint
+---------------------------------------------
+InputBlock START N
+MAJOROP					= OpName
+SUBOP					= SubOpName
+OperandType				= [Given below]
+InputBlock END
+
+---------------------------------------------
+user provided data
+---------------------------------------------
+InputBlock START N
+MAJOROP					= OpName
+SUBOP					= SubOpName
+OutPutBlockId[opt]		= A Unsigned integer
+OperandType				= [Given below]
+OperandDelimiter[opt]	= 
+Operand 1				= 
+Operand 2				= 
+				......
+Operand n				= 
+InputBlock END
+
+---------------------------------------------
+Indicate to use sample values
+---------------------------------------------
+InputBlock START K
+MAJOROP					= OpName
+SUBOP					= SubOpName
+OutPutBlockId[opt]		= A Unsigned integer
+OperandType				= [Given below]
+OperandDelimiter[opt]	= Comma separated
+UseSample[opt]			= True/False or T/F or Yes/No or Y/N
+SampleDefault[opt]		= True/False or T/F or Yes/No or Y/N
+SampleHint 1[opt]		= [Custom Format]
+SampleHint 2[opt]		= [Custom Format]
+               -----------------
+SampleHint N[opt]		= [Custom Format]
+InputBlock END
+
+---------------------------------------------
+Output Block
+---------------------------------------------
+OutputBlock START [P]
+Target					= Console/File/ConsoleFile
+FilePath				=  
+OutputBlock END
+
+=====================================================
+Explanation
+=====================================================
+Multiple type of multiple Input blocks are possible. N can be any integer. 
+newline after '=' indicates end of value
+Default output is on the console. 
+Output Block without ID specifies output for all of the input
+An input bloick can optionally refer to an output block
+
+=====================================================
+Tag and tag value format
+=====================================================
+-----------------------------------------------------
+Sample Hint
+-----------------------------------------------------
+Total:<+ve num>
+Total:<+ve num>,low:<+ve num>,high:<+ve num>
+Total:<+ve num>,low:<num>,high:<num>
+Total:<+ve num>,maxstrsize:<+ve num>
+
+-----------------------------------------------------
+Operand Type
+-----------------------------------------------------
+Int				Integer
+UInt			Unsigned Integer
+Char			Character
+Str				String
+Custom			Custom
+
+-----------------------------------------------------
+Operation Name
+-----------------------------------------------------
+Sorting						MOPS_NAME_SORT
+Searching					MOPS_NAME_SEARCH
+Binary operations			MOPS_NAME_BINOPS
+Linked List					MOPS_NAME_LINKEDLIST
+Strings						MOPS_NAME_STRINGS
+Twisters					MOPS_NAME_TWISTERS
+Binary Tree					MOPS_NAME_BINTREE
+
+-----------------------------------------------------
+Sub operation names
+-----------------------------------------------------
+MOPS_NAME_SORT
+	Quick					SORT_QUICK				
+	Insertion				SORT_INSERTION
+	Insertion Recursive		SORT_INSERTION_R
+	Merge					SORT_MERGE
+	Bubble					SORT_BUBBLE
+
+MOPS_NAME_SEARCH
+	Linear					SEARCH_LINEAR 
+	Binary					SEARCH_BINARY
+		
+MOPS_NAME_BINOPS
+	BINOPS_1				// 
+	BINOPS_2				//
+	BINOPS_3				//
+			
+MOPS_NAME_LINKEDLIST
+	
+MOPS_NAME_STRINGS
+MOPS_NAME_TWISTERS
+MOPS_NAME_BINTREE

@@ -1,0 +1,100 @@
+=====================================================
+Different styles of Input and output blocks
+
+=============================================
+InputBlock START N
+MAJOROP					= OpName
+SUBOP					= SubOpName
+OperandType				= [Given below]
+InputBlock END
+---------------------------------------------
+Work on sample data using default samplehint
+=============================================
+InputBlock START N
+MAJOROP					= OpName
+SUBOP					= SubOpName
+OutPutBlockId[opt]		= A Unsigned integer
+OperandType				= [Given below]
+OperandDelimiter[opt]	= Comma separated
+Operand 1				= 
+Argument 2				= 
+				......
+Argument n				= 
+InputBlock END
+---------------------------------------------
+user provided data
+=============================================
+InputBlock START K
+MAJOROP					= OpName
+SUBOP					= SubOpName
+OutPutBlockId[opt]		= A Unsigned integer
+OperandType				= [Given below]
+OperandDelimiter[opt]	= Comma separated
+Sample[opt]				= True/False or T/F or Yes/No or Y/N
+SampleDefault[opt]		= True/False or T/F or Yes/No or Y/N
+SampleHint[opt]			= [Custom Format]
+SampleData1				=
+SampleData2				=
+				......
+SampleDatan				= 
+InputBlock END
+---------------------------------------------
+Indicate to use sample values
+=============================================
+OutputBlock START [P]
+Target					= Console/File/ConsoleFile
+FilePath				=  
+OutputBlock END
+=============================================
+
+Multiple type of multiple Input blocks are possible. N can be any integer. 
+newline after '=' indicates end of value
+Default output is on the console. 
+Output Block without ID specifies output for all of the input
+An input bloick can optionally refer to an output block
+
+=====================================================
+Operand Type
+-----------------------------------------------------
+Int				Integer
+UInt			Unsigned Integer
+Char			Character
+Str				String
+Custom			Custom
+
+=====================================================
+Operation Name
+-----------------------------------------------------
+							Internal symbol		
+Sorting						MOPS_NAME_SORT
+Searching					MOPS_NAME_SEARCH
+Binary operations			MOPS_NAME_BINOPS
+Linked List					MOPS_NAME_LINKEDLIST
+Strings						MOPS_NAME_STRINGS
+Twisters					MOPS_NAME_TWISTERS
+Binary Tree					MOPS_NAME_BINTREE
+
+=====================================================
+Sub operation names
+-----------------------------------------------------
+MOPS_NAME_SORT
+	Quick					SORT_QUICK				
+	Insertion				SORT_INSERTION
+	Insertion Recursive		SORT_INSERTION_R
+	Merge					SORT_MERGE
+	Bubble					SORT_BUBBLE
+
+MOPS_NAME_SEARCH
+	Linear					SEARCH_LINEAR 
+	Binary					SEARCH_BINARY
+		
+MOPS_NAME_BINOPS
+	BINOPS_1				// 
+	BINOPS_2				//
+	BINOPS_3				//
+			
+MOPS_NAME_LINKEDLIST
+	
+MOPS_NAME_STRINGS
+MOPS_NAME_TWISTERS
+MOPS_NAME_BINTREE
